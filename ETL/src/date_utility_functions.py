@@ -47,10 +47,12 @@ def get_day(a : list) -> int:
     return int(a[2])
 
 
-def create_timestamp(year  : int,
-                     month : int,
-                     day   : int,
-                     time  : str) -> datetime.datetime :
+def create_timestamp(
+    year  : int,
+    month : int,
+    day   : int,
+    time  : str
+	) -> datetime.datetime :
     
     t = time.split(":")
     return datetime.datetime(year, 
