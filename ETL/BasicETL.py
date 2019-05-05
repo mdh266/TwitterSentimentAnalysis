@@ -7,7 +7,6 @@
 ##########################################
 
 # import python functions i wrote
-
 from src.date_utility_functions import (get_day_of_week,
                                        get_month,
                                        get_year,
@@ -17,6 +16,8 @@ from src.date_utility_functions import (get_day_of_week,
 from src.regex_utility_functions import removeRegex, normalize
 
 from credentials import (user, password)
+
+import os
 
 from pyspark.sql import SparkSession
 
@@ -32,6 +33,7 @@ from pyspark.ml.feature import Tokenizer
 
 
 if __name__ == "__main__":
+
   cluster         = "harmoncluster-xsarp"
 
   #local  MongoDB database connection configurations
@@ -40,9 +42,10 @@ if __name__ == "__main__":
 
   # Atlas database connection configurations
   conf_input      = "mongodb+srv://{0}:{1}@{2}.mongodb.net/test?retryWrites=true"\
-                                  .format(user,password, cluster)
-  conf_output     = "mongodb+srv://{0}:{0}@{1}.mongodb.net/test"\
-                                  .format(user,password, cluster)
+                                  .format(user, password, cluster)
+  conf_output     = "mongodb+srv://{0}:{1}@{2}.mongodb.net/test"\
+                                  .format(user, password, cluster)
+
 
   # local path to the csv file
   path            = "./training.1600000.processed.noemoticon.csv"
@@ -53,6 +56,14 @@ if __name__ == "__main__":
   # name of the collection
   collection_name = "tweets"
 
+  # download the kaggle data set
+  os.system("kaggle datasets download -d kazanova/sentiment140")
+
+  # unzip the file
+  os.system("unzip sentiment140.zip")
+
+  # everything before this is executed a regular python code driver....
+  # now build spark session
 
   ##################################################################################
   # Build Spark Session
